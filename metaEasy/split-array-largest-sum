@@ -1,0 +1,47 @@
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int left = getMax(nums);
+        int right = getTotal(nums);
+        int result = -1;
+
+        while(left <= right){
+            int mid = left + (right - left)/2;
+            if(canDivide(nums, k, mid)){
+                result = mid;
+                right = mid-1;
+            }else{
+                left = mid+1;
+            }
+        }
+        return result;
+    }
+
+    public boolean canDivide(int[] nums, int k, int mid){
+        int partition = 1;
+        int total = 0;
+        for(int num: nums){
+            total += num;
+            if(total > mid){
+                partition++;
+                total = num;
+            }
+        }
+        return partition <= k;
+    }
+
+    public int getMax(int[] nums){
+        int max = 0;
+        for(int num: nums){
+            max = Math.max(max, num);
+        }
+        return max;
+    }
+
+    public int getTotal(int[] nums){
+        int total = 0;
+        for(int num: nums){
+            total += num;
+        }
+        return total;
+    }
+}
